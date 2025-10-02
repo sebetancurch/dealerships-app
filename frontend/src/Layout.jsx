@@ -1,6 +1,11 @@
 import { Outlet } from "react-router-dom"
+import { useAuth } from "./hooks/useAuth"
+import { useEffect } from "react"
 
 function Layout() {
+
+    const { user, logout } = useAuth()
+
     return (
         <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden">
             <header className="w-full">
@@ -18,10 +23,17 @@ function Layout() {
                         <a className="text-sm font-medium text-background-dark/70 dark:text-background-light/70 hover:text-primary dark:hover:text-primary transition-colors" href="/about">About</a>
                         <a className="text-sm font-medium text-background-dark/70 dark:text-background-light/70 hover:text-primary dark:hover:text-primary transition-colors" href="/contact">Contact Us</a>
                     </nav>
-                    <div className="hidden items-center gap-4 md:flex">
-                        <a className="px-4 py-2 text-sm font-bold text-background-dark dark:text-background-light bg-background-light dark:bg-background-dark border border-primary/20 hover:bg-primary/10 dark:hover:bg-primary/20 rounded transition-colors" href="/login">Login</a>
-                        <a className="px-4 py-2 text-sm font-bold text-white bg-primary hover:bg-primary/90 rounded transition-colors" href="/register">Register</a>
-                    </div>
+                    {
+                        !user ?
+                            <div className="hidden items-center gap-4 md:flex">
+                                <a className="px-4 py-2 text-sm font-bold text-background-dark dark:text-background-light bg-background-light dark:bg-background-dark border border-primary/20 hover:bg-primary/10 dark:hover:bg-primary/20 rounded transition-colors" href="/login">Login</a>
+                                <a className="px-4 py-2 text-sm font-bold text-white bg-primary hover:bg-primary/90 rounded transition-colors" href="/register">Register</a>
+                            </div> :
+                            <div className="hidden items-center gap-4 md:flex">
+                                <h1 className="text-xl font-bold text-background-dark dark:text-background-light">{user.username}</h1>
+                                <button className="px-4 py-2 text-sm font-bold text-background-dark dark:text-background-light bg-background-light dark:bg-background-dark border border-primary/20 hover:bg-primary/10 dark:hover:bg-primary/20 rounded transition-colors" onClick={logout}>Logout</button>
+                            </div>
+                    }
                 </div>
             </header>
             <Outlet />
