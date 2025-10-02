@@ -1,0 +1,46 @@
+function Login() {
+    return (
+        <main className="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+            <div className="w-full max-w-md space-y-8 bg-background-light dark:bg-background-dark p-10 rounded-xl border border-border-light dark:border-border-dark">
+                <div>
+                    <h2 className="mt-6 text-center text-3xl font-extrabold text-text-light dark:text-text-dark">
+                        Welcome Back
+                    </h2>
+                    <p className="mt-2 text-center text-sm text-subtle-light dark:text-subtle-dark">
+                        Sign in to continue to AutoHaus
+                    </p>
+                </div>
+                <form action="#" className="mt-8 space-y-6" method="POST">
+                    <input name="remember" type="hidden" value="true" />
+                    <div className="rounded-lg shadow-sm -space-y-px">
+                        <div>
+                            <label className="sr-only" htmlFor="email-address">Username or Email</label>
+                            <input autoComplete="email" className="appearance-none rounded-t-lg relative block w-full px-3 py-4 border border-border-light dark:border-border-dark placeholder-subtle-light dark:placeholder-subtle-dark text-text-light dark:text-text-dark bg-background-light dark:bg-background-dark focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm" id="email-address" name="email" placeholder="Username or Email" required="" type="email" />
+                        </div>
+                        <div>
+                            <label className="sr-only" htmlFor="password">Password</label>
+                            <input autoComplete="current-password" className="appearance-none rounded-b-lg relative block w-full px-3 py-4 border border-border-light dark:border-border-dark placeholder-subtle-light dark:placeholder-subtle-dark text-text-light dark:text-text-dark bg-background-light dark:bg-background-dark focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm" id="password" name="password" placeholder="Password" required="" type="password" />
+                        </div>
+                    </div>
+                    <div className="flex items-center justify-between">
+                        <div className="text-sm">
+                            <a className="font-medium text-primary hover:text-primary/80" href="#">
+                                Forgot your password?
+                            </a>
+                        </div>
+                    </div>
+                    <div>
+                        <button className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-bold rounded-lg text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary focus:ring-offset-background-light dark:focus:ring-offset-background-dark" type="submit">
+                            Sign In
+                        </button>
+                    </div>
+                </form>
+                <div className="text-sm text-center">
+                    <p className="text-subtle-light dark:text-subtle-dark">Don't have an account? <a className="font-medium text-primary hover:text-primary/80" href="/register">Sign up</a></p>
+                </div>
+            </div>
+        </main>
+    )
+}
+
+export default Login
