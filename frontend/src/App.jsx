@@ -1,13 +1,13 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import Home from "./components/Home"
-import Layout from "./Layout"
-import About from "./components/About"
-import Contact from "./components/Contact"
-import Login from "./components/Login"
-import Register from "./components/Register"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./components/Home";
+import Layout from "./Layout";
+import About from "./components/About";
+import Contact from "./components/Contact";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import Dealers from "./components/Dealers";
 
 function App() {
-
   return (
     <Router>
       <Routes>
@@ -17,10 +17,11 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/dealers" element={<Dealers />} />
         </Route>
       </Routes>
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;
