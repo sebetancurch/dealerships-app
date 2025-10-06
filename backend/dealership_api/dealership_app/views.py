@@ -29,11 +29,11 @@ def login(request):
                 'token': token.key,
                 'user_id': user.id,
                 'username': user.username,
-            }, status=200)
+                'status':200
+            })
         else:
             return Response(
-                {'error': 'Invalid credentials'},
-                status=401
+                {'error': 'Invalid credentials', 'status':401},
             )
     except User.DoesNotExist:
         return Response(
@@ -61,7 +61,7 @@ def register(request):
         return Response({
             'token': token.key,
             'user_id': user.id,
-            'username': user.username,
+            'username': user.username
         }, status=200)
     else:
         return Response(
@@ -84,7 +84,7 @@ def get_cars(request):
     cars = []
     for car_model in car_models:
         cars.append({"CarModel": car_model.name, "CarMake": car_model.car_make.name})
-    return JsonResponse({"CarModels":cars})
+    return Response({"CarModels":cars}, status=200)
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
@@ -94,41 +94,46 @@ def get_dealerships(request, state="All"):
     else:
         endpoint = "/fetchDealers/"+state
     dealerships = get_request(endpoint)
-    return JsonResponse({"status":200,"dealers":dealerships})
+    return Response({"dealers":dealerships}, status=200)
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def get_dealer_details(request, id):
     dealership = get_request("/fetchDealer/" + id)
-    if dealership.len() > 0:
+    if len(dealership) > 0:
         return Response({'dealership': dealership[0]}, status=200)
     else:
         return Response({'error': 'Dealership not found'}, status=404)
     
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def get_dealer_reviews(request, id):
     reviews = get_request("/fetchReviews/dealer/" + id)
-    if reviews.len() > 0:
-        review_detail = {}
+    if len(reviews) > 0:
+        review_detail = []
         for review in reviews:
-            review_detail[review['id']] = {
+            review_detail.append({
                 "name": review['name'],
                 "review": review['review'],
                 "purchase": review['purchase'],
                 "purchase_date": review['purchase_date'],
-                "sentiment": analyze_review_sentiments(review["review"]),             
-            }
+                "car_make": review['car_make'],
+                "car_model": review['car_model'],
+                "car_year": review['car_year'],
+                "sentiment": analyze_review_sentiments(review["review"])['sentiment'],             
+            })
         return Response({'reviews': review_detail}, status=200)
     else:
-        return Response({'error': 'Reviews not found'}, status=404)
+        return Response({'reviews': []}, status=200)
 
+@api_view(['POST'])
 def add_review(request):
     if(request.user.is_anonymous == False):
         data = json.loads(request.body)
         try:
             response = post_review(data)
-            return JsonResponse({"status":200})
+            return Response(status=200)
         except:
-            return JsonResponse({"status":401,"message":"Error in posting review"})
+            return Response({"message":"Error in posting review"}, status=500)
     else:
-        return JsonResponse({"status":403,"message":"Unauthorized"})
+        return Response({"status":403,"message":"Unauthorized"}, status=403)

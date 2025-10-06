@@ -1,41 +1,27 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
+import Loading from "./common/loading";
+import Error from "./common/error";
 
 function Dealers() {
-  const dealers = [
-    {
-      id: 1,
-      name: "Dealer 1",
-      city: "City 1",
-      state: "State 1",
-      zip: "12345",
-    },
-    {
-      id: 2,
-      name: "Dealer 2",
-      city: "City 2",
-      state: "State 2",
-    },
-    {
-      id: 3,
-      name: "Dealer 3",
-      city: "City 3",
-      state: "State 3",
-    },
-  ];
+
+  const navigate = useNavigate();
+
+  const { user } = useAuth();
 
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [items, setItems] = useState([]);
 
-  useEffect(async () => {
-    await fetchDealers();
+  useEffect(() => {
+    fetchDealers();
   }, []);
 
-  const fetchDealers = async (e) => {
-    e.preventDefault();
+  const fetchDealers = async () => {
     setIsLoading(true);
     try {
-      response = await fetch("http://localhost:8000/fetchDealers", {
+      const response = await fetch("http://localhost:8000/get_dealerships", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -43,9 +29,10 @@ function Dealers() {
       });
 
       const data = await response.json();
-      if (response.state === 200) {
-        setItems(data);
-        SetError(null);
+
+      if (response.status === 200) {
+        setItems(data.dealers);
+        setError(null);
         setIsLoading(false);
       } else {
         setError(data.error);
@@ -59,9 +46,9 @@ function Dealers() {
   return (
     <>
       {isLoading ? (
-        <p>Loading...</p>
+        <Loading />
       ) : error ? (
-        <p>{error}</p>
+        <Error error={error} />
       ) : (
         <main className="flex flex-1 justify-center py-10 px-4 sm:px-6 lg:px-8">
           <div className="w-full max-w-7xl">
@@ -108,21 +95,26 @@ function Dealers() {
                     >
                       State
                     </th>
-                    <th
+                    {user && <th
                       className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
                       scope="col"
-                    ></th>
+                    ></th>}
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 dark:divide-gray-700/50">
-                  {dealers.map((dealer) => {
+                  {items.map((dealer) => {
                     return (
-                      <tr className="hover:bg-gray-50 dark:hover:bg-gray-800/20">
+                      <tr className="hover:bg-gray-50 dark:hover:bg-gray-800/20" key={dealer.id}>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                           {dealer.id}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
-                          {dealer.name}
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                          <button
+                            onClick={() => navigate(`/dealer/${dealer.id}`)}
+                            className="text-primary hover:text-primary/80 hover:underline cursor-pointer font-medium"
+                          >
+                            {dealer.short_name}
+                          </button>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                           {dealer.city}
@@ -136,14 +128,14 @@ function Dealers() {
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                           {dealer.state}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        {user && <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                           <a
                             className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
-                            href="#"
+                            href={"postreview/" + dealer.id}
                           >
                             Review Dealer
                           </a>
-                        </td>
+                        </td>}
                       </tr>
                     );
                   })}
