@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 class CarMake(models.Model):
     name = models.CharField(max_length=50, unique=True)
@@ -7,13 +8,14 @@ class CarMake(models.Model):
 
     def __str__(self):
         return self.name + " - " + self.description
-    
+
+
 class CarModel(models.Model):
 
     class CarType(models.TextChoices):
-        SEDAN = 'Sedan'
-        SUV = 'SUV'
-        WAGON = 'Wagon'
+        SEDAN = "Sedan"
+        SUV = "SUV"
+        WAGON = "Wagon"
 
     car_make = models.ForeignKey(CarMake, on_delete=models.CASCADE)
     dealer_id = models.IntegerField(null=True, blank=True)

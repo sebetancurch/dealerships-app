@@ -6,7 +6,6 @@ import Error from "./common/error";
 import states from "../data/states";
 
 function Dealers() {
-
   const navigate = useNavigate();
 
   const { user } = useAuth();
@@ -25,12 +24,15 @@ function Dealers() {
     setIsLoading(true);
     const search = state === "" ? "" : "/" + state;
     try {
-      const response = await fetch("http://localhost:8000/get_dealerships" + search, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        "http://localhost:8000/get_dealerships" + search,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
         },
-      });
+      );
 
       const data = await response.json();
 
@@ -99,25 +101,36 @@ function Dealers() {
                       className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
                       scope="col"
                     >
-                      <select className="form-select w-1/2 p-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg shadow-sm focus:ring-primary focus:border-primary text-gray-900 dark:text-gray-100"
+                      <select
+                        className="form-select w-1/2 p-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg shadow-sm focus:ring-primary focus:border-primary text-gray-900 dark:text-gray-100"
                         id="state"
                         name="state"
                         value={searchState}
-                        onChange={(e) => setSearchState(e.target.value)}>
+                        onChange={(e) => setSearchState(e.target.value)}
+                      >
                         <option value="">Select State</option>
-                        {states.map((state, index) => <option key={index} value={state.name}>{state.name}</option>)}
+                        {states.map((state, index) => (
+                          <option key={index} value={state.name}>
+                            {state.name}
+                          </option>
+                        ))}
                       </select>
                     </th>
-                    {user && <th
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
-                      scope="col"
-                    ></th>}
+                    {user && (
+                      <th
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+                        scope="col"
+                      ></th>
+                    )}
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 dark:divide-gray-700/50">
                   {items.map((dealer) => {
                     return (
-                      <tr className="hover:bg-gray-50 dark:hover:bg-gray-800/20" key={dealer.id}>
+                      <tr
+                        className="hover:bg-gray-50 dark:hover:bg-gray-800/20"
+                        key={dealer.id}
+                      >
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                           {dealer.id}
                         </td>
@@ -141,14 +154,16 @@ function Dealers() {
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                           {dealer.state}
                         </td>
-                        {user && <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                          <a
-                            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
-                            href={"postreview/" + dealer.id}
-                          >
-                            Review Dealer
-                          </a>
-                        </td>}
+                        {user && (
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <a
+                              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                              href={"postreview/" + dealer.id}
+                            >
+                              Review Dealer
+                            </a>
+                          </td>
+                        )}
                       </tr>
                     );
                   })}
