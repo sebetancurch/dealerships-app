@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import Loading from "./common/loading";
 import Error from "./common/error";
+import states from "../data/states";
 
 function Dealers() {
 
@@ -13,15 +14,18 @@ function Dealers() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [items, setItems] = useState([]);
+  const [searchState, setSearchState] = useState("");
 
   useEffect(() => {
-    fetchDealers();
-  }, []);
+    fetchDealers(searchState);
+  }, [searchState]);
 
-  const fetchDealers = async () => {
+  const fetchDealers = async (state) => {
+    console.log(state);
     setIsLoading(true);
+    const search = state === "" ? "" : "/" + state;
     try {
-      const response = await fetch("http://localhost:8000/get_dealerships", {
+      const response = await fetch("http://localhost:8000/get_dealerships" + search, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -35,10 +39,12 @@ function Dealers() {
         setError(null);
         setIsLoading(false);
       } else {
+        setIsLoading(false);
         setError(data.error);
       }
     } catch (error) {
-      setError(error);
+      setIsLoading(false);
+      setError("There was an error fetching dealerships.");
       console.log(error);
     }
   };
@@ -93,7 +99,14 @@ function Dealers() {
                       className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
                       scope="col"
                     >
-                      State
+                      <select className="form-select w-1/2 p-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg shadow-sm focus:ring-primary focus:border-primary text-gray-900 dark:text-gray-100"
+                        id="state"
+                        name="state"
+                        value={searchState}
+                        onChange={(e) => setSearchState(e.target.value)}>
+                        <option value="">Select State</option>
+                        {states.map((state, index) => <option key={index} value={state.name}>{state.name}</option>)}
+                      </select>
                     </th>
                     {user && <th
                       className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"

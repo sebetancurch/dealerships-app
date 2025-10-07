@@ -1,5 +1,4 @@
 import json
-from django.http import JsonResponse
 from rest_framework.decorators import  api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -128,12 +127,9 @@ def get_dealer_reviews(request, id):
 
 @api_view(['POST'])
 def add_review(request):
-    if(request.user.is_anonymous == False):
-        data = json.loads(request.body)
-        try:
-            response = post_review(data)
-            return Response(status=200)
-        except:
-            return Response({"message":"Error in posting review"}, status=500)
-    else:
-        return Response({"status":403,"message":"Unauthorized"}, status=403)
+    data = request.data
+    try:
+        post_review(data)
+        return Response(status=200)
+    except:
+        return Response({"message":"Error in posting review"}, status=500)
