@@ -1,9 +1,11 @@
-// eslint.config.js
-import js from "@eslint/js";
-import globals from "globals";
-import eslintPluginPrettier from "eslint-plugin-prettier";
+"use strict";
 
-export default [
+// eslint.config.js
+const js = require("@eslint/js");
+const globals = require("globals");
+const eslintPluginPrettier = require("eslint-plugin-prettier");
+
+module.exports = [
   js.configs.recommended,
   {
     files: ["**/*.js"],
