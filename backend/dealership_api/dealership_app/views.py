@@ -140,5 +140,5 @@ def add_review(request):
     try:
         post_review(data)
         return Response(status=200)
-    except:
-        return Response({"message": "Error in posting review"}, status=500)
+    except Exception as e:
+        return Response({"message": str(e)}, status=500)

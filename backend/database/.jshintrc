@@ -1,0 +1,12 @@
+{
+  "esversion": 11,          // allow ES2020+ (arrow, async/await, spread…)
+  "node": true,             // allow Node globals like require, module
+  "browser": false,
+  "undef": true,
+  "unused": true,
+  "strict": "global",
+  "globals": {
+    "process": true,
+    "__dirname": true
+  }
+}
