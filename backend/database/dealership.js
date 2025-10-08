@@ -1,8 +1,8 @@
 "use strict";
 
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
 const dealerships = new Schema({
   id: {
@@ -42,4 +42,4 @@ const dealerships = new Schema({
   },
 });
 
-module.exports = mongoose.model("dealerships", dealerships);
+export default mongoose.model("dealerships", dealerships);

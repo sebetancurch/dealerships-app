@@ -1,8 +1,8 @@
 "use strict";
 
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
 const cars = new Schema({
   dealer_id: {
@@ -31,4 +31,4 @@ const cars = new Schema({
   },
 });
 
-module.exports = mongoose.model("cars", cars);
+export default mongoose.model("cars", cars);
