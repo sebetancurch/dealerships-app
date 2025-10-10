@@ -15,7 +15,7 @@ const dealerships_data = JSON.parse(
   fs.readFileSync("data/dealerships.json", "utf8"),
 );
 
-mongoose.connect("mongodb://mongo_db:27017/", { dbName: "dealershipsDB" });
+mongoose.connect("mongodb://mongo-db:27017/", { dbName: "dealershipsDB" });
 
 import Reviews from "./review.js";
 import Dealerships from "./dealership.js";

@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dealership-api-config
+data:
+  backend_url: "http://dealership-db:3030"
+  sentiment_analyzer_url: "http://sentiment-analyzer:5000/"
+  SQLITE_PATH: "/data/db.sqlite3"

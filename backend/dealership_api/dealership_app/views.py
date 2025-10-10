@@ -77,7 +77,6 @@ Car dealerchips services
 def get_cars(request):
     count = CarMake.objects.filter().count()
     model_count = CarModel.objects.filter().count()
-    print(count)
     if count == 0 or model_count == 0:
         initiate()
     car_models = CarModel.objects.select_related("car_make")

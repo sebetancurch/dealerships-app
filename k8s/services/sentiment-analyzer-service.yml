@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sentiment-analyzer
+  labels:
+    app: sentiment-analyzer
+spec:
+  type: ClusterIP
+  selector:
+    app: sentiment-analyzer
+  ports:
+    - port: 5000
+      targetPort: 5000
+      protocol: TCP
+      name: http
