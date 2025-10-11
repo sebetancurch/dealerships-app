@@ -16,14 +16,14 @@ spec:
     spec:
       containers:
         - name: sentiment-analyzer
-          image: dealership-app/sentimentanalyzer:1.0.0
+          image: sebetancurch98/sentimentanalyzer:1.0.0
           ports:
             - containerPort: 5000
               name: http
           resources:
             requests:
-              memory: "512Mi"
-              cpu: "500m"
+              memory: "32Mi"
+              cpu: "10m"
             limits:
-              memory: "1Gi"
-              cpu: "1000m"
+              memory: "64Mi"
+              cpu: "100m"
