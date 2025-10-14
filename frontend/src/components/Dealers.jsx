@@ -25,7 +25,7 @@ function Dealers() {
     const search = state === "" ? "" : "/" + state;
     try {
       const response = await fetch(
-        "http://localhost:8000/get_dealerships" + search,
+        process.env.BACKEND_URL + "/get_dealerships" + search,
         {
           method: "GET",
           headers: {

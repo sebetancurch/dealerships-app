@@ -18,7 +18,7 @@ function Login() {
     const password = e.target.password.value;
 
     try {
-      let response = await fetch("http://localhost:8000/login", {
+      let response = await fetch(process.env.BACKEND_URL + "/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

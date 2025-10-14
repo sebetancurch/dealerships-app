@@ -39,7 +39,7 @@ function Dealer() {
     const fetchDealer = async () => {
         setIsLoading(true);
         const response = await fetch(
-            "http://localhost:8000/get_dealer_details/" + id,
+            process.env.BACKEND_URL + "/get_dealer_details/" + id,
             {
                 method: "GET",
                 headers: {
@@ -61,7 +61,7 @@ function Dealer() {
     const fetchReviews = async () => {
         setIsLoading(true);
         const response = await fetch(
-            "http://localhost:8000/get_dealer_reviews/" + id,
+            process.env.BACKEND_URL + "/get_dealer_reviews/" + id,
             {
                 method: "GET",
                 headers: {

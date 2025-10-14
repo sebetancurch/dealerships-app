@@ -25,7 +25,7 @@ function PostReview() {
   const fetchCars = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch("http://localhost:8000/get_cars", {
+      const response = await fetch(process.env.BACKEND_URL + "/get_cars", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -66,7 +66,7 @@ function PostReview() {
 
     data.dealership = id;
 
-    const response = await fetch("http://localhost:8000/add_review", {
+    const response = await fetch(process.env.BACKEND_URL + "/add_review", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

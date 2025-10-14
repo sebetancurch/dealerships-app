@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: database
-          image: dealership-app/database:1.0.0
+          image: docker.io/sebetancurch98/database:1.0.0
           ports:
             - containerPort: 3030
               name: http
@@ -25,8 +25,8 @@ spec:
               value: mongodb://mongo-db:27017
           resources:
             requests:
-              memory: "256Mi"
-              cpu: "250m"
+              memory: "128Mi"
+              cpu: "100m"
             limits:
-              memory: "512Mi"
-              cpu: "500m"
+              memory: "256Mi"
+              cpu: "100m"

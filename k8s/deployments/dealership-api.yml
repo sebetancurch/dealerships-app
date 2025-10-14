@@ -5,7 +5,7 @@ metadata:
   labels:
     app: dealership-api
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: dealership-api
@@ -14,9 +14,16 @@ spec:
       labels:
         app: dealership-api
     spec:
+      initContainers:
+        - name: fix-permissions
+          image: busybox
+          command: ["sh", "-c", "chown -R 1000:1000 /data"]
+          volumeMounts:
+            - name: sqlite-storage
+              mountPath: /data
       containers:
         - name: dealership-api
-          image: dealership-app/dealership_api:1.0.0
+          image: docker.io/sebetancurch98/dealership-api:1.0.0
           ports:
             - containerPort: 8000
               name: http
@@ -32,8 +39,9 @@ spec:
               cpu: "250m"
             limits:
               memory: "512Mi"
-              cpu: "500m"
+              cpu: "250m"
       volumes:
         - name: sqlite-storage
-          persistentVolumeClaim:
-            claimName: sqlite-pvc
+          # persistentVolumeClaim:
+          #   claimName: sqlite-pvc
+          emptyDir: {}
