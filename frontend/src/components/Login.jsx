@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 
 function Login() {
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
   const navigate = useNavigate();
   const { login } = useAuth();
 
@@ -18,7 +19,7 @@ function Login() {
     const password = e.target.password.value;
 
     try {
-      let response = await fetch(process.env.BACKEND_URL + "/login", {
+      let response = await fetch(BACKEND_URL + "/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

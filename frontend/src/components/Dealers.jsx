@@ -5,7 +5,9 @@ import Loading from "./common/loading";
 import Error from "./common/error";
 import states from "../data/states";
 
+
 function Dealers() {
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
   const navigate = useNavigate();
 
   const { user } = useAuth();
@@ -20,12 +22,11 @@ function Dealers() {
   }, [searchState]);
 
   const fetchDealers = async (state) => {
-    console.log(state);
     setIsLoading(true);
     const search = state === "" ? "" : "/" + state;
     try {
       const response = await fetch(
-        process.env.BACKEND_URL + "/get_dealerships" + search,
+        BACKEND_URL + "/get_dealerships" + search,
         {
           method: "GET",
           headers: {

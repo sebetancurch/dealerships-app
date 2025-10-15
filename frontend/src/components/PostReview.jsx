@@ -6,6 +6,7 @@ import Loading from "./common/loading";
 import Error from "./common/error";
 
 function PostReview() {
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
   const { id } = useParams();
 
   const { user, token } = useAuth();
@@ -25,7 +26,7 @@ function PostReview() {
   const fetchCars = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch(process.env.BACKEND_URL + "/get_cars", {
+      const response = await fetch(BACKEND_URL + "/get_cars", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -48,6 +49,7 @@ function PostReview() {
   };
 
   const addReview = async (e) => {
+    const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
     e.preventDefault();
     setSubmitting(true);
 
@@ -66,7 +68,7 @@ function PostReview() {
 
     data.dealership = id;
 
-    const response = await fetch(process.env.BACKEND_URL + "/add_review", {
+    const response = await fetch(BACKEND_URL + "/add_review", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -6,6 +6,7 @@ import Loading from "./common/loading";
 import Error from "./common/error";
 
 function Dealer() {
+    const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
     const { id } = useParams();
 
     const { user } = useAuth();
@@ -39,7 +40,7 @@ function Dealer() {
     const fetchDealer = async () => {
         setIsLoading(true);
         const response = await fetch(
-            process.env.BACKEND_URL + "/get_dealer_details/" + id,
+            BACKEND_URL + "/get_dealer_details/" + id,
             {
                 method: "GET",
                 headers: {
@@ -61,7 +62,7 @@ function Dealer() {
     const fetchReviews = async () => {
         setIsLoading(true);
         const response = await fetch(
-            process.env.BACKEND_URL + "/get_dealer_reviews/" + id,
+            BACKEND_URL + "/get_dealer_reviews/" + id,
             {
                 method: "GET",
                 headers: {
