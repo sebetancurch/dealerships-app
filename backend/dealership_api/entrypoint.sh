@@ -2,19 +2,21 @@
 set -e
 
 DB_PATH=${SQLITE_PATH:-/data/db.sqlite3}
+APP_USER="django"
 
 echo "📦 Using database at: $DB_PATH"
 
-# Make migrations (safe even if no changes)
-python manage.py makemigrations --noinput || true
+# Ensure /data exists and is writable
+mkdir -p /data
+chown -R $APP_USER:$APP_USER /data
 
-if [ ! -f "$DB_PATH" ]; then
-  echo "🆕 No existing database found — applying migrations..."
-  python manage.py migrate --noinput
-else
-  echo "✅ Existing database detected — skipping migration to avoid duplicate tables."
-  python manage.py migrate --fake --noinput || true
-fi
+# Run migrations every time (safe for SQLite)
+echo "🛠️ Applying database migrations..."
+python manage.py migrate --noinput
+
+# Optional: Collect static files
+echo "🎨 Collecting static files..."
+python manage.py collectstatic --noinput || echo "⚠️ Failed to collect static files — continuing..."
 
 echo "🚀 Starting application..."
 exec "$@"

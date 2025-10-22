@@ -1,8 +1,9 @@
 import requests
 from decouple import config
+import os
 
-backend_url = config("backend_url")
-sentiment_analyzer_url = config("sentiment_analyzer_url")
+backend_url = os.getenv("backend_url")
+sentiment_analyzer_url = os.getenv("sentiment_analyzer_url")
 
 
 def get_request(endpoint, **kwargs):

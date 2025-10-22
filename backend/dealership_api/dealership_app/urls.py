@@ -1,8 +1,13 @@
+from django.http import JsonResponse
 from django.urls import path
 
 from . import views
 
+def home(request):
+    return JsonResponse({"status": "ok", "message": "Dealership API running"})
+
 urlpatterns = [
+    path("", home, name="home"),
     path("login", views.login, name="login"),
     path("register", views.register, name="register"),
     path("logout", views.logout, name="logout"),

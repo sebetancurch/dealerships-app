@@ -5,7 +5,7 @@ metadata:
   labels:
     app: dealership-api
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: dealership-api
   ports:
